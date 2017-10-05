@@ -4,12 +4,29 @@
 
 # Site
 title: ZCY's blog
-subtitle:
-description:
+subtitle: 自说自话
+description: 奇葩强迫症患者。。。寻药中。。。
 author: chenyu zhang
 language:
 timezone:
 
+subnav:
+  github: "https://github.com/zcytop"
+  weibo: "#"
+  rss: "#"
+  zhihu: "#"
+  #qq: "#"
+  #weixin: "#"
+  #jianshu: "#"
+  #douban: "#"
+  #segmentfault: "#"
+  #bilibili: "#"
+  #acfun: "#"
+  #mail: "mailto:litten225@qq.com"
+  #facebook: "#"
+  #google: "#"
+  #twitter: "#"
+  #linkedin: "#"
 # URL
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
 url: http://zcycn.top
@@ -17,6 +34,8 @@ root: /
 permalink: :year/:month/:day/:title/
 permalink_defaults:
 
+avatar: https://avatars1.githubusercontent.com/u/31262637?v=4&s=400&u=cff37d20899c3cf5a867188c06aad00475e6a363
+duoshuo: true
 # Directory
 source_dir: source
 public_dir: public
@@ -72,7 +91,7 @@ pagination_dir: page
 # Extensions
 ## Plugins: https://hexo.io/plugins/
 ## Themes: https://hexo.io/themes/
-theme: prontera
+theme: yilia
 
 # Deployment
 ## Docs: https://hexo.io/docs/deployment.html
@@ -80,3 +99,22 @@ deploy:
   type: git
   repo: git@github.com:zcytop/zcytop.github.io.git
   branch: master
+
+jsonContent:
+  meta: false
+  pages: false
+  posts:
+    title: true
+    date: true
+    path: true
+    text: false
+    raw: false
+    content: false
+    slug: false
+    updated: false
+    comments: false
+    link: false
+    permalink: false
+    excerpt: false
+    categories: false
+    tags: true
