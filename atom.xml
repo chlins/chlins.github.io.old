@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>ZCY&#39;s blog</title>
+  
+  <subtitle>自说自话</subtitle>
+  <link href="/atom.xml" rel="self"/>
+  
+  <link href="http://zcycn.top/"/>
+  <updated>2017-10-18T08:22:20.677Z</updated>
+  <id>http://zcycn.top/</id>
+  
+  <author>
+    <name>chenyu zhang</name>
+    
+  </author>
+  
+  <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Paxos</title>
+    <link href="http://zcycn.top/2017/10/18/Paxos/"/>
+    <id>http://zcycn.top/2017/10/18/Paxos/</id>
+    <published>2017-10-18T08:21:40.000Z</published>
+    <updated>2017-10-18T08:22:20.677Z</updated>
+    
+    <content type="html"><![CDATA[<h4 id="Paxos算法初识"><a href="#Paxos算法初识" class="headerlink" title="Paxos算法初识"></a>Paxos算法初识</h4><p>在分布式领域中，许多共识算法都是由这个算法演化而来或者说是简化版的实现，如zookeeper使用的zab以及etcd使用的raft等。</p><p>在分布式中，算法用来保证状态机复制的一致性，也就是说保证所有节点中数据是一致的。Paxos算法中主要包含四种角色：</p><ul><li>Client：由client提出议题，类似广大民众</li><li>Proposer：根据client提出的议题，向上提议，类似人大代表</li><li>Acceptor：决策者，类似最后的投票表决者</li><li>Learner：执行者，当某个议题通过时，它将采取行动</li><li>Leader：领导者，只会存在一个领导者</li></ul><p>执行阶段：</p><ol><li>Prepare：Proposer准备一个编号为N的议题，通知Acceptor多数者讨论。</li><li>Promise：Acceptor回应Proposer同意。</li><li>Accept Request：如果多数Acceptor同意，Proposer会首先进行set操作，并通知Acceptor。</li><li>Accepted：Acceptor接收，此后Learner会执行。</li></ol><p>不过Basic Paxos算法过于繁琐复杂，工程上更多采用的是Multi Paxos即简化的Paxos，如raft或zab，它们与Paxos相比，角色更少，一般只有三种角色状态，因此应用更加广泛。</p><p>附wiki上的一张图，非常直观的显示了Paxos的流程：</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">Client   Proposer      Acceptor     Learner</div><div class="line">   |         |          |  |  |       |  |</div><div class="line">   X--------&gt;|          |  |  |       |  |  Request</div><div class="line">   |         X---------&gt;|-&gt;|-&gt;|       |  |  Prepare(1)</div><div class="line">   |         |&lt;---------X--X--X       |  |  Promise(1,&#123;Va,Vb,Vc&#125;)</div><div class="line">   |         X---------&gt;|-&gt;|-&gt;|       |  |  Accept!(1,Vn)</div><div class="line">   |         |&lt;---------X--X--X------&gt;|-&gt;|  Accepted(1,Vn)</div><div class="line">   |&lt;---------------------------------X--X  Response</div><div class="line">   |         |          |  |  |       |  |</div></pre></td></tr></table></figure>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h4 id=&quot;Paxos算法初识&quot;&gt;&lt;a href=&quot;#Paxos算法初识&quot; class=&quot;headerlink&quot; title=&quot;Paxos算法初识&quot;&gt;&lt;/a&gt;Paxos算法初识&lt;/h4&gt;&lt;p&gt;在分布式领域中，许多共识算法都是由这个算法演化而来或者说是简化版的实现，如zooke
+      
+    
+    </summary>
+    
+    
+      <category term="分布式" scheme="http://zcycn.top/tags/%E5%88%86%E5%B8%83%E5%BC%8F/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>BlockChain</title>
+    <link href="http://zcycn.top/2017/10/05/BlockChain/"/>
+    <id>http://zcycn.top/2017/10/05/BlockChain/</id>
+    <published>2017-10-05T04:54:36.000Z</published>
+    <updated>2017-10-18T07:44:05.060Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="区块链（Block-Chain）"><a href="#区块链（Block-Chain）" class="headerlink" title="区块链（Block Chain）"></a>区块链（Block Chain）</h3><blockquote><p>技术思想基于分布式，类似git，分布式数据库。</p></blockquote><p>技术（分布式账本）:</p><ul><li>信息公开透明</li><li>不可篡改，任何人可以查看</li><li>系统永不宕机</li><li>链算能力强</li></ul><p>思想（共识机制）:</p><ul><li>去中心化架构</li><li>决策民主高效，决议自动执行</li><li>智能合约</li><li>规则严格执行</li></ul><p>比特币设计理念:</p><ul><li><p>避免作恶（避免叛徒节点捣乱）</p></li><li><p>负反馈调节 （网络越大时，决策能力越强，越稳定，防作弊能力越强）</p></li><li><p>共识机制：PoW（Proof of Work算法，在一个区间范围内产生一个随机数，哪个block最先穷举猜出这个数，将此block链接，其他分支抛弃。缺点是算法耗cpu，效率不高，每秒最多交易可能仅10次左右。）</p><p>​</p></li></ul><blockquote><p>相关实践</p></blockquote><p>Hyperledger — 超级账本（Linux基金会下的开源项目）:</p><ul><li>区块链服务（Blockchain）</li><li>链码服务（Chaincode）</li><li>成员权限管理（Membership）</li></ul><p>Ethereum — 以太坊（blockchain1.0 simple state machine ——-&gt; blockchain2.0 state machine+code）</p><ul><li><p>单独为智能合约指定编程语言Solidity</p></li><li><p>使用了内存要求较高的哈希函数，避免出现算力矿机</p></li><li><p>uncle块激励机制，降低矿池的优势，减少区块产生间隔为15s</p></li><li><p>难度调整算法，一定的自动反馈机制</p></li><li><p>gas限制调整算法，限制代码执行指令数，避免循环攻击</p></li><li><p>记录当前状态的哈希数的根哈希值到区块，某些情况下实现轻量级客户端</p></li><li><p>为执行智能合约而设计的简化虚拟机EVM</p><p>​</p></li></ul>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h3 id=&quot;区块链（Block-Chain）&quot;&gt;&lt;a href=&quot;#区块链（Block-Chain）&quot; class=&quot;headerlink&quot; title=&quot;区块链（Block Chain）&quot;&gt;&lt;/a&gt;区块链（Block Chain）&lt;/h3&gt;&lt;blockquote&gt;
+&lt;p&gt;技
+      
+    
+    </summary>
+    
+    
+      <category term="区块链" scheme="http://zcycn.top/tags/%E5%8C%BA%E5%9D%97%E9%93%BE/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>HelloBlog</title>
+    <link href="http://zcycn.top/2017/09/06/HelloBlog/"/>
+    <id>http://zcycn.top/2017/09/06/HelloBlog/</id>
+    <published>2017-09-06T08:53:21.000Z</published>
+    <updated>2017-10-18T07:44:05.060Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="Hello"><a href="#Hello" class="headerlink" title="Hello ~~~"></a>Hello ~~~</h3><p>折腾过乱七八糟一堆博客，最终决定退烧于hexo+github，省钱省事。。。。。（主要是穷）</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h3 id=&quot;Hello&quot;&gt;&lt;a href=&quot;#Hello&quot; class=&quot;headerlink&quot; title=&quot;Hello ~~~&quot;&gt;&lt;/a&gt;Hello ~~~&lt;/h3&gt;&lt;p&gt;折腾过乱七八糟一堆博客，最终决定退烧于hexo+github，省钱省事。。。。。（主要是穷）&lt;/p&gt;
+      
+    
+    </summary>
+    
+    
+      <category term="生活" scheme="http://zcycn.top/tags/%E7%94%9F%E6%B4%BB/"/>
+    
+  </entry>
+  
+</feed>
