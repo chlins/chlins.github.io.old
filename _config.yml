@@ -11,7 +11,7 @@ language:
 timezone:
 
 subnav:
-  github: "https://github.com/zcytop"
+  github: "https://github.com/chlins"
   weibo: "#"
   rss: "#"
   zhihu: "#"
@@ -97,7 +97,7 @@ theme: yilia
 ## Docs: https://hexo.io/docs/deployment.html
 deploy:
   type: git
-  repo: git@github.com:zcytop/zcytop.github.io.git
+  repo: git@github.com:chlins/zcytop.github.io.git
   branch: master
 
 jsonContent:
